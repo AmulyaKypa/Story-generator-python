@@ -27,13 +27,14 @@ def generate_multi_genre_story_with_templates():
 
     story_elements = {
         'sci-fi': {
-            'items': ["the unstable neutrino flux capacitor", "a sentient can of space beans", "a zero-gravity hamster wheel"],
-            'settings': ["a rusted-out orbital pizza parlor", "the core of a rogue AI mainframe", "a holographic swamp on Planet Zorp"],
-            'obstacles': ["a swarm of nanobots disguised as butterflies", "a grumpy android demanding a software update"],
-            'adjectives': ["quantum", "synthetic", "chrome-plated", "luminous"],
-            'actions': ["teleported", "phasered", "hyper-jumped", "beamed"],
+            'items': ["the unstable neutrino flux capacitor", "the sentient can of space beans", "the zero-gravity hamster wheel","the quantum flux stabilizer","the antimatter-infused rubber duck","the holographic map of the Andromeda galaxy"],
+            'settings': ["a rusted-out orbital pizza parlor", "the core of a rogue AI mainframe", "a holographic swamp on Planet Zorp"," a derelict spaceship drifting near a black hole"," a bustling intergalactic bazaar","the neon-lit underbelly of a cyberpunk metropolis"],
+            'obstacles': ["a swarm of nanobots disguised as butterflies", "a grumpy android demanding a software update"," a temporal rift that randomly rewinds time"," a space pirate with a penchant for bad poetry"," a malfunctioning teleportation pad"," an alien diplomat who only speaks in riddles"],
+            'adjectives': ["quantum","cryptic", "synthetic", "chrome-plated", "luminous"],
+            'actions': ["teleported", "phasered", "hyper-jumped", "beamed","recalibrated","decrypted"],
             # Serious, surprising twist
-            'twists': ["It was revealed that the entire planet they were on was actually a single, colossal sleeping organism.", "The Item granted them unlimited power, but only after erasing all their memories.", "Their 'partner,' Sidekick, was a deep-cover operative from a future timeline, sent only to retrieve the Item."]
+            'twists': ["It was revealed that the entire planet they were on was actually a single, colossal sleeping organism.", "The item granted them unlimited power, but only after erasing all their memories.", "Their 'partner,' Sidekick, was a deep-cover operative from a future timeline, sent only to retrieve the Item.",""
+            "The mission was a simulation designed to test their loyalty to an intergalactic council.","The Item was actually a sentient being that chose them as its new companions.","The true villain was not the obstacle they faced, but the very organization that sent them on the mission.","The Item was a key to a prison holding an ancient cosmic entity, and retrieving it risked unleashing chaos upon the universe."]
         },
         'fantasy': {
             'items': ["the legendary three-leaf clover of luck", "a talking goblet of lukewarm tea", "a staff that only conjures tiny bubbles"],
@@ -97,10 +98,10 @@ def generate_multi_genre_story_with_templates():
 
     # SCI-FI Template (Serious Tone)
     sci_fi_template = f"""
-    *** Report: Mission {adjective.title()} Echo ***
+    Report: Mission {adjective.title()} Echo
     
-    Captain **{hero_name}** and their engineering genius, **{sidekick_name}**, risked spacial collapse to retrieve the **{item}** from the hostile environment of **{setting}**. 
-    They {action} across the hull, bypassing planetary defenses, but their path was critically blocked by **{obstacle}**. 
+    Captain {hero_name} and their genius assistant, {sidekick_name}, were drinking coffee in the space station when they received a  to retrieve the {item} from the hostile environment of {setting}. 
+    They {action} across the hull, bypassing planetary defenses, but their path was critically blocked by {obstacle}. 
     After {sidekick_name} bravely sacrificed a critical component, they accessed the core. 
     Upon retrieving the {item}, the following catastrophic anomaly was recorded: {final_twist}
     Mission Status: Completed. Outcome: Unknown.
@@ -110,8 +111,8 @@ def generate_multi_genre_story_with_templates():
     fantasy_template = f"""
     *** The Ballad of the {adjective.title()} Betrayal ***
     
-    Brave Sir **{hero_name}** and his sworn brother, **{sidekick_name}**, faced the high demand: find the lost **{item}** hidden deep within the cursed **{setting}**. 
-    They {action} through ancient perils, only to be stopped by the formidable presence of **{obstacle}**. 
+    Brave Sir {hero_name} and his sworn brother, {sidekick_name}, faced the high demand: find the lost {item} hidden deep within the cursed {setting}. 
+    They {action} through ancient perils, only to be stopped by the formidable presence of {obstacle}. 
     {hero_name} defeated the threat using both steel and wisdom! 
     They claimed the {item}, but the true reward was the revelation: {final_twist}
     The realm would never be the same.
@@ -153,10 +154,10 @@ def generate_multi_genre_story_with_templates():
     # COMEDY Template (Absurd/Funny Tone)
     comedy_template = f"""
     *** The {adjective.title()}, Absurd, and Utterly Pointless Quest ***
-    
-    **{hero_name}** and **{sidekick_name}** woke up and decided to pursue the infamous **{item}** at **{setting}**. They immediately {action} off a curb. 
-    Their biggest challenge was the nonsensical presence of **{obstacle}**. 
-    After a chaotic three-minute wrestling match involving a tiny hat, they won! 
+
+    {hero_name} and {sidekick_name} woke up and decided to pursue the infamous {item} at {setting}. They immediately {action} off a curb.
+    Their biggest challenge was the nonsensical presence of {obstacle}.
+    After a chaotic three-minute wrestling match involving a tiny hat, they won!
     They claimed the {item}, but then realized the horrible, hilarious truth: {final_twist}
     Fin. Now go get a snack.
     """

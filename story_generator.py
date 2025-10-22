@@ -27,9 +27,11 @@ def generate_multi_genre_story_with_templates():
 
     story_elements = {
         'sci-fi': {
+            'relaxing': ["having a cup of synth-coffee", "stargazing from the observation deck", "playing zero-g chess", "tuning the ship's quantum radio", "meditating in the anti-gravity chamber"," practicing holo-sculpting"," recalibrating the star maps"],
             'items': ["the unstable neutrino flux capacitor", "the sentient can of space beans", "the zero-gravity hamster wheel","the quantum flux stabilizer","the antimatter-infused rubber duck","the holographic map of the Andromeda galaxy"],
             'settings': ["a rusted-out orbital pizza parlor", "the core of a rogue AI mainframe", "a holographic swamp on Planet Zorp"," a derelict spaceship drifting near a black hole"," a bustling intergalactic bazaar","the neon-lit underbelly of a cyberpunk metropolis"],
             'obstacles': ["a swarm of nanobots disguised as butterflies", "a grumpy android demanding a software update"," a temporal rift that randomly rewinds time"," a space pirate with a penchant for bad poetry"," a malfunctioning teleportation pad"," an alien diplomat who only speaks in riddles"],
+            'solution': ["ingenious hacking skills", "a well-timed photon blast", "a clever use of a gravity well", "an unexpected alliance with a space-faring creature", "an old star map revealing a hidden passage"],
             'adjectives': ["quantum","cryptic", "synthetic", "chrome-plated", "luminous"],
             'actions': ["teleported", "phasered", "hyper-jumped", "beamed","recalibrated","decrypted"],
             # Serious, surprising twist
@@ -37,11 +39,11 @@ def generate_multi_genre_story_with_templates():
             "The mission was a simulation designed to test their loyalty to an intergalactic council.","The Item was actually a sentient being that chose them as its new companions.","The true villain was not the obstacle they faced, but the very organization that sent them on the mission.","The Item was a key to a prison holding an ancient cosmic entity, and retrieving it risked unleashing chaos upon the universe."]
         },
         'fantasy': {
-            'items': ["the legendary three-leaf clover of luck", "a talking goblet of lukewarm tea", "a staff that only conjures tiny bubbles"],
-            'settings': ["the Whispering Forest of the Dryad Clowns", "a floating castle made of gingerbread", "the belly of a mildly annoyed griffin"],
-            'obstacles': ["a confused wizard who lost his spectacles", "a bridge troll who charges tolls in interpretive dance"],
-            'adjectives': ["ancient", "enchanted", "mystical", "glimmering"],
-            'actions': ["sashayed", "galloped", "chanted", "flew"],
+            'items': ["the legendary three-leaf clover of luck", "the talking goblet of lukewarm tea", "the staff that only conjures tiny bubbles","the enchanted rubber chicken","the crown of invisible squirrels","the map that leads to nowhere","the sword that hums show tunes","the magical mirror that reveals one's darkest secrets","the cloak that makes the wearer slightly less noticeable","the potion that turns anything into slightly better cheese"],
+            'settings': ["the Whispering Forest of the Dryad Clowns", "a floating castle made of gingerbread", "the belly of a mildly annoyed griffin","a village where everyone rides unicycles","a labyrinthine library filled with mischievous books","a mountain that sings opera at dawn","a swamp that smells like old socks","a desert where the sand occasionally forms into tiny sand people"],
+            'obstacles': ["a confused wizard who lost his spectacles", "a bridge troll who charges tolls in interpretive dance"," a riddle-speaking sphinx with a cold", "a band of mischievous pixies playing pranks"," a dragon who hoards rubber ducks"," a giant who is afraid of heights"," a witch who only casts spells in limerick form"],
+            'adjectives': ["ancient", "enchanted", "mystical", "glimmering","whimsical","bewitched","fanciful","spellbinding"],
+            'actions': ["sashayed", "galloped", "chanted", "flew","pranced","ambled","soared","danced","twirled","glided"],
             # Dramatic, mythical twist
             'twists': ["The 'King' they were serving was, in fact, the legendary Item itself, testing their worthiness.", "Upon claiming the Item, all magic in the realm vanished, leaving them powerless.", "The Item was a key that unlocked a new villain—a shadow of their own deepest flaw."]
         },
@@ -99,12 +101,15 @@ def generate_multi_genre_story_with_templates():
     # SCI-FI Template (Serious Tone)
     sci_fi_template = f"""
     Report: Mission {adjective.title()} Echo
-    
-    Captain {hero_name} and their genius assistant, {sidekick_name}, were drinking coffee in the space station when they received a  to retrieve the {item} from the hostile environment of {setting}. 
-    They {action} across the hull, bypassing planetary defenses, but their path was critically blocked by {obstacle}. 
-    After {sidekick_name} bravely sacrificed a critical component, they accessed the core. 
-    Upon retrieving the {item}, the following catastrophic anomaly was recorded: {final_twist}
-    Mission Status: Completed. Outcome: Unknown.
+
+    {hero_name} and their genius partner {sidekick_name}, were {random.choice(genre_data['relaxing'])} when they received a distress call from the headquarters. The mission - to retrieve {item} from the hostile environment of {setting}. 
+    The two {action} across the solar system, through asteroid fields and nebulae, only to be confronted by {obstacle}. 
+    Both of them were in a fix until {sidekick_name} finally employed {random.choice(genre_data['solution'])} and neutralized the threat.
+    They finally found {item}. They secured the item and prepared to return to base.
+    Once at the base, the two replayed the data from the item, and their past adventures. After the analysis, they discovered a shocking truth:
+         {final_twist}
+    This discovery changed everything. They were in much deeper waters than they had initially thought. This was only the beginning of a much larger saga.
+    MISSION TO BE CONTINUED...
     """
 
     # FANTASY Template (Dramatic Tone)

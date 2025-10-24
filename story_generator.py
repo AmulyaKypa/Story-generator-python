@@ -4,7 +4,7 @@ import os
 import time
 
 # Load API key securely from environment variable
-API_KEY = os.getenv("AIzaSyC8PIwQNv04D6VvD5tPUoeGVmabjr2aBFE")
+API_KEY = os.getenv("GEMINI_API_KEY")
 MODEL_NAME = "gemini-2.5-flash"
 API_URL = f"https://generativelanguage.googleapis.com/v1beta/models/{MODEL_NAME}:generateContent?key={API_KEY}"
 
@@ -17,10 +17,9 @@ def generate_story(genre, paragraphs, keywords):
     )
 
     payload = {
-        "contents": [{"parts": [{"text": prompt}]}],
-        "config": {"temperature": 0.8}
-    }
-
+    "contents": [{"parts": [{"text": prompt}]}],
+    "generationConfig": {"temperature": 0.8}
+}
     max_retries = 5
     for attempt in range(max_retries):
         try:

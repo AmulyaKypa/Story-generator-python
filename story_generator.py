@@ -4,7 +4,7 @@ import os
 import time
 
 # Load API key securely from environment variable
-API_KEY = os.getenv("GEMINI_API_KEY")
+API_KEY = os.getenv("AIzaSyC8PIwQNv04D6VvD5tPUoeGVmabjr2aBFE")
 MODEL_NAME = "gemini-2.5-flash"
 API_URL = f"https://generativelanguage.googleapis.com/v1beta/models/{MODEL_NAME}:generateContent?key={API_KEY}"
 

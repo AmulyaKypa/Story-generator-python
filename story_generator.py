@@ -8,6 +8,7 @@ API_KEY = os.getenv("GEMINI_API_KEY")
 MODEL_NAME = "gemini-2.5-flash"
 API_URL = f"https://generativelanguage.googleapis.com/v1beta/models/{MODEL_NAME}:generateContent?key={API_KEY}"
 
+#QUESTIONS TO USER
 def generate_story(genre, paragraphs, keywords):
     prompt = (
         f"Write a {genre} story. "

@@ -81,7 +81,7 @@ def main():
         except ValueError:
             print("Invalid number. Try again.")
 
-    keywords = input("Enter 3–5 keywords (comma separated): ").strip()
+    keywords = input("Enter keywords (comma separated): ").strip()
     while not keywords:
         keywords = input("Keywords cannot be empty. Try again: ").strip()
 

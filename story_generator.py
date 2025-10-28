@@ -8,7 +8,7 @@ API_KEY = os.getenv("GEMINI_API_KEY")
 MODEL_NAME = "gemini-2.5-flash"
 API_URL = f"https://generativelanguage.googleapis.com/v1beta/models/{MODEL_NAME}:generateContent?key={API_KEY}"
 
-#QUESTIONS TO USER
+#prompt to ai to generate story
 def generate_story(genre, paragraphs, keywords):
     prompt = (
         f"Write a {genre} story. "
@@ -21,6 +21,7 @@ def generate_story(genre, paragraphs, keywords):
     "contents": [{"parts": [{"text": prompt}]}],
     "generationConfig": {"temperature": 0.8}
 }
+    # Implementing retry logic for handling rate limits and transient errors
     max_retries = 5
     for attempt in range(max_retries):
         try:
@@ -31,7 +32,7 @@ def generate_story(genre, paragraphs, keywords):
                 data=json.dumps(payload),
                 timeout=30
             )
-
+# Specific handling for 400 Bad Request
             if response.status_code == 400:
                 error_detail = response.json()
                 error_message = error_detail.get('error', {}).get('message', 'No specific error message.')
@@ -62,11 +63,11 @@ def generate_story(genre, paragraphs, keywords):
 
 def main():
     print("--- AI Story Generator ---")
-
+    # checking api key validity
     if not API_KEY:
         print("ERROR: Gemini API key not found. Set it as an environment variable 'GEMINI_API_KEY'.")
         return
-
+#Questions to user for story parameters
     genre = input("Enter genre (e.g., Sci-Fi, Horror): ").strip()
     while not genre:
         genre = input("Genre cannot be empty. Try again: ").strip()
@@ -87,11 +88,10 @@ def main():
     print("\n--- Generating Story ---\n")
     story = generate_story(genre, paragraphs, keywords)
 
-    print("\n" + "="*50)
     print("GENERATED STORY")
-    print("="*50)
+    print("-"*50)
     print(story)
-    print("="*50)
+    print("-"*50)
 
 if __name__ == "__main__":
     main()

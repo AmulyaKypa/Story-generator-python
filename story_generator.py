@@ -2,7 +2,6 @@ import requests
 import json
 import os
 import time
-
 # Load API key securely from environment variable
 API_KEY = os.getenv("GEMINI_API_KEY")
 MODEL_NAME = "gemini-2.5-flash"

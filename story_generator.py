@@ -2,13 +2,31 @@ import requests
 import json
 import os
 import time
-# Load API key securely from environment variable
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+
+# Initialize the Flask application
+app = Flask(__name__)
+# Enable CORS for development so the client HTML (on a different port or file://)
+# can communicate with the Flask server (on port 5000)
+CORS(app)
+
+# --- Configuration (using constants from your original code) ---
+# NOTE: In a real application, you must set GEMINI_API_KEY in your environment
 API_KEY = os.getenv("GEMINI_API_KEY")
 MODEL_NAME = "gemini-2.5-flash"
 API_URL = f"https://generativelanguage.googleapis.com/v1beta/models/{MODEL_NAME}:generateContent?key={API_KEY}"
 
-#prompt to ai to generate story
-def generate_story(genre, paragraphs, keywords):
+
+# --- Core AI Logic Function ---
+def generate_story_logic(genre, paragraphs, keywords):
+    """
+    Calls the Gemini API to generate a story based on user inputs.
+    Includes retry logic for robustness.
+    """
+    if not API_KEY:
+        return "ERROR: Gemini API key not found. Set it as an environment variable 'GEMINI_API_KEY'."
+
     prompt = (
         f"Write a {genre} story. "
         f"The story must be exactly {paragraphs} paragraphs long. "
@@ -17,21 +35,23 @@ def generate_story(genre, paragraphs, keywords):
     )
 
     payload = {
-    "contents": [{"parts": [{"text": prompt}]}],
-    "generationConfig": {"temperature": 0.8}
-}
-    # Implementing retry logic for handling rate limits and transient errors
+        "contents": [{"parts": [{"text": prompt}]}],
+        "generationConfig": {"temperature": 0.8}
+    }
+    
     max_retries = 5
     for attempt in range(max_retries):
         try:
-            print(f"Attempt {attempt + 1} of {max_retries}...")
+            # Console output for server debugging
+            print(f"API Attempt {attempt + 1} of {max_retries} for genre: {genre}")
             response = requests.post(
                 API_URL,
                 headers={"Content-Type": "application/json"},
                 data=json.dumps(payload),
                 timeout=30
             )
-# Specific handling for 400 Bad Request
+
+            # Specific handling for 400 Bad Request
             if response.status_code == 400:
                 error_detail = response.json()
                 error_message = error_detail.get('error', {}).get('message', 'No specific error message.')
@@ -47,50 +67,47 @@ def generate_story(genre, paragraphs, keywords):
             return "Error: No candidates returned by API."
 
         except requests.exceptions.HTTPError as e:
-            print(f"HTTP Error: {e}")
+            error_msg = f"HTTP Error: {e.response.status_code} - {e.response.text}"
             if attempt < max_retries - 1 and e.response.status_code in [429, 400]:
                 wait_time = 2 ** attempt
                 print(f"Retrying in {wait_time} seconds...")
                 time.sleep(wait_time)
             else:
-                return f"Failed due to HTTP error: {e}"
+                return f"Failed due to HTTP error: {error_msg}"
         except requests.exceptions.RequestException as e:
-            print(f"Request Error: {e}")
             return f"Connection error: {e}"
 
     return "Failed after all retries."
 
-def main():
-    print("--- AI Story Generator ---")
-    # checking api key validity
-    if not API_KEY:
-        print("ERROR: Gemini API key not found. Set it as an environment variable 'GEMINI_API_KEY'.")
-        return
-#Questions to user for story parameters
-    genre = input("Enter genre (e.g., Sci-Fi, Horror): ").strip()
-    while not genre:
-        genre = input("Genre cannot be empty. Try again: ").strip()
 
-    while True:
-        try:
-            paragraphs = int(input("Enter number of paragraphs: "))
-            if paragraphs > 0:
-                break
-            print("Enter a positive number.")
-        except ValueError:
-            print("Invalid number. Try again.")
+# --- Flask API Endpoint ---
 
-    keywords = input("Enter keywords (comma separated): ").strip()
-    while not keywords:
-        keywords = input("Keywords cannot be empty. Try again: ").strip()
+@app.route('/generate_story', methods=['POST'])
+def generate_story_endpoint():
+    """
+    Endpoint that receives user input via POST and returns the generated story.
+    """
+    try:
+        data = request.get_json()
+    except Exception:
+        return jsonify({"error": "Invalid JSON payload"}), 400
+        
+    genre = data.get('genre', '').strip()
+    paragraphs = data.get('paragraphs', 0)
+    keywords = data.get('keywords', '').strip()
 
-    print("\n--- Generating Story ---\n")
-    story = generate_story(genre, paragraphs, keywords)
+    # Basic server-side validation
+    if not all([genre, keywords]) or not isinstance(paragraphs, int) or paragraphs <= 0:
+        return jsonify({"error": "Missing or invalid input parameters (genre, paragraphs, or keywords)."}), 400
 
-    print("GENERATED STORY")
-    print("-"*50)
-    print(story)
-    print("-"*50)
+    story = generate_story_logic(genre, paragraphs, keywords)
+    
+    # Return the result as a JSON object
+    if story.startswith("ERROR:") or story.startswith("Failed due to HTTP error:"):
+        return jsonify({"story": story, "success": False, "error": story}), 500
+    else:
+        return jsonify({"story": story, "success": True}), 200
 
-if __name__ == "__main__":
-    main()
+if __name__ == '__main__':
+    # When running directly: python story_generator.py
+    app.run(debug=True)
